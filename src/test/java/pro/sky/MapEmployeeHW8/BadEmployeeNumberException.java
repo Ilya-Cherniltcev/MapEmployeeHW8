@@ -1,4 +1,4 @@
-package pro.sky.exceptionsemployeehw5;
+package pro.sky.MapEmployeeHW8;
 
 public class BadEmployeeNumberException extends RuntimeException {
 }

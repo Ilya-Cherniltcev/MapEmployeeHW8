@@ -1,39 +1,24 @@
-package pro.sky.exceptionsemployeehw5;
+package pro.sky.MapEmployeeHW8;
 
 import org.springframework.stereotype.Service;
-import pro.sky.exceptionsemployeehw5.exceptions.AlreadyExistsException;
-import pro.sky.exceptionsemployeehw5.exceptions.EmployeeNotFoundException;
-import pro.sky.exceptionsemployeehw5.exceptions.OverArrayException;
+import pro.sky.MapEmployeeHW8.exceptions.AlreadyExistsException;
+import pro.sky.MapEmployeeHW8.exceptions.EmployeeNotFoundException;
+import pro.sky.MapEmployeeHW8.exceptions.OverArrayException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Service
 public class EmployeeService implements EmployeeInterface {
-    Employee[] empl = new Employee[3];
-    private int id;
-//    Employee[] empl = {
-//            new Employee("Евгений", "Потапов"),
-//            new Employee("Алла", "Горева"),
-//            new Employee("Олег", "Крылов")
-//    };
-
-//    private String modifyToJSON(Employee employee) { // ======= переделываем представление в JSON формат
-//        Gson gson = new Gson();
-//        String eDescript = gson.toJson(employee);
-//        return eDescript;
-//    }
-
-//    public Employee getEmployee(Integer num) throws OverArrayException { // ======   склеиваем имя с фамилией и возвращаем по номеру ===========
-//        final Employee employee;
-//        if (num >= empl.length || num < 0) {
-//            //      return null;
-//            throw new OverArrayException();
-//        }
-//        employee = empl[num];
-//        //  String employeeDescription = modifyToJSON(employee);
-//        return employee;
-//    }
+    private int id = 0;
+    Map<Employee, Integer> empl = new HashMap<>(
+            new Employee("Евгений", "Потапов"), getNewId(),
+            new Employee("Алла", "Горева"), getNewId(),
+            new Employee("Олег", "Крылов"), getNewId());
 
     // +++++++++++++++++++++++ Добавляем нового сотрудника +++++++++++++++++++++++++++
+    @Override
     public Employee addNewEmployee(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
         for (int i = 0; i < empl.length; i++) {
@@ -53,6 +38,7 @@ public class EmployeeService implements EmployeeInterface {
     }
 
     // ----------------- Находим сотрудника по Ф.И.О. ------------------------------------
+@Override
     public Employee findEmployee(String firstName, String lastName) {
         final Employee employee;
         for (int i = 0; i < empl.length; i++) {
@@ -68,9 +54,23 @@ public class EmployeeService implements EmployeeInterface {
     }
 
     // ----------------- Удаляем сотрудника по Ф.И.О. ------------------------------------
+    @Override
     public Employee deleteEmployee(String firstName, String lastName) {
         Employee employee = findEmployee(firstName, lastName);
         empl[id] = null;
         return employee;
+    }
+
+    // ========= внутренний метод для присваивания id каждому сотруднику ======
+    private Integer getNewId() {
+        int result = id;
+        id++;
+        return result;
+    }
+
+    // ----------------- Печатаем всех сотрудников ------------------------------------
+    @Override
+    public Map<Employee, Integer> printAllEmployees() {
+        return empl;
     }
 }

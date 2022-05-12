@@ -1,10 +1,10 @@
-package pro.sky.exceptionsemployeehw5;
+package pro.sky.MapEmployeeHW8;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ExceptionsEmployeeHw5ApplicationTests {
+class ExceptionsEmployeeHW8ApplicationTests {
 
     @Test
     void contextLoads() {
