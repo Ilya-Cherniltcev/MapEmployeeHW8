@@ -1,4 +1,6 @@
-package pro.sky.MapEmployeeHW8;
+package pro.sky.MapEmployeeHW8.interfaces;
+
+import pro.sky.MapEmployeeHW8.data.Employee;
 
 import java.util.Map;
 
