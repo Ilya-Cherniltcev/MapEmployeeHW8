@@ -1,12 +1,11 @@
-package pro.sky.MapEmployeeHW8.controllers;
+package pro.sky.map_employee_hw8.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.sky.MapEmployeeHW8.data.Employee;
-import pro.sky.MapEmployeeHW8.interfaces.EmployeeInterface;
-import pro.sky.MapEmployeeHW8.services.EmployeeService;
+import pro.sky.map_employee_hw8.data.Employee;
+import pro.sky.map_employee_hw8.interfaces.EmployeeInterface;
 
 import java.util.Collection;
 import java.util.List;
@@ -40,12 +39,6 @@ public class EmployeeController {
         return employeeService.deleteEmployee(firstName, lastName);
     }
 
-    // ===========  печать всех сотрудников
-    @GetMapping(path = "/printall")
-    public Collection<Employee> printAllEmployees() {
-        return employeeService.printAllEmployees();
-    }
-
     // * * * * * * *  сумма ежемесячных затрат на зарплату * * * * * * * *
     @GetMapping(path = "/allcost")
     public String allCostsPerMonth() {
@@ -55,14 +48,14 @@ public class EmployeeController {
 
     // * * * * * * *  сотрудник с МАКСимальной з/п * * * * * * * *
     @GetMapping(path = "/max-salary")
-    public String getEmployeeOfMaxSalary(@RequestParam("departmentId") int departmentId) {
-        return "Сотрудник с максимальной з/п: " + employeeService.getEmployeeOfMaxSalary(departmentId);
+    public Employee getEmployeeOfMaxSalary(@RequestParam("departmentId") int departmentId) {
+        return employeeService.getEmployeeOfMaxSalary(departmentId);
     }
 
     // * * * * * * *  сотрудник с минимальной з/п * * * * * * * *
     @GetMapping(path = "/min-salary")
-    public String getEmployeeOfMinSalary(@RequestParam("departmentId") int departmentId) {
-        return "Сотрудник с минимальной з/п: " + employeeService.getEmployeeOfMinSalary(departmentId);
+    public Employee getEmployeeOfMinSalary(@RequestParam("departmentId") int departmentId) {
+        return employeeService.getEmployeeOfMinSalary(departmentId);
     }
 
     // * * * * * * *  средняя  з/п * * * * * * * *
@@ -80,7 +73,7 @@ public class EmployeeController {
 
     // + + + + + + + +      ВСЕ СОТРУДНИКИ ПО ОТДЕЛАМ   + + + + + + + +
     @GetMapping(path = "/all")
-    public List<Employee> getAllEmployees() {
+    public Map<Integer, List<Employee>>  getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 }

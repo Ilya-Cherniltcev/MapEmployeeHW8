@@ -1,4 +1,4 @@
-package pro.sky.MapEmployeeHW8.controllers;
+package pro.sky.map_employee_hw8.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
     @GetMapping
-    public String HelloController() {
+    public String helloController() {
         return "Добро пожаловать в нашу базу данных работников!";
     }
 }

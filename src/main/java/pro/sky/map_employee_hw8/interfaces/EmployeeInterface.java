@@ -1,8 +1,7 @@
-package pro.sky.MapEmployeeHW8.interfaces;
+package pro.sky.map_employee_hw8.interfaces;
 
-import pro.sky.MapEmployeeHW8.data.Employee;
+import pro.sky.map_employee_hw8.data.Employee;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +11,6 @@ public interface EmployeeInterface {
     Employee findEmployee(String firstName, String lastName);
 
     Employee deleteEmployee(String firstName, String lastName);
-
-    Collection<Employee> printAllEmployees();
 
     String calcCostsPerMonth();
 
@@ -25,5 +22,5 @@ public interface EmployeeInterface {
 
     List<Employee> getEmployeesOfDepartment(int departmentId);
 
-    List<Employee> getAllEmployees();
+    Map<Integer, List<Employee>> getAllEmployees();
 }
