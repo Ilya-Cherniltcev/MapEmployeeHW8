@@ -16,7 +16,7 @@ public class Employee {
         this.department = department;
         this.salary = salary;
     }
-//---
+
     // -------------------------- Геттеры  --------------------------
     public String getFirstName() {
         return firstName;
