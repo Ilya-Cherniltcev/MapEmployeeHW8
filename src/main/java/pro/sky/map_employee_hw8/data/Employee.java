@@ -44,7 +44,7 @@ public class Employee {
     }
     // -------------------------- Метод toString  --------------------------
 
-//***
+//***//
     @Override
     public String toString() {
         return firstName + " " + lastName + ", отдел " + department +
