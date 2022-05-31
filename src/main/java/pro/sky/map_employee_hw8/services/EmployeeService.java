@@ -1,5 +1,6 @@
 package pro.sky.map_employee_hw8.services;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.map_employee_hw8.data.Employee;
 import pro.sky.map_employee_hw8.exceptions.AlreadyExistsException;
@@ -21,28 +22,49 @@ public class EmployeeService implements EmployeeInterface {
             "Антон Тулупов", new Employee("Антон", "Тулупов", 3, 63_700),
             "Семен Кузнецов", new Employee("Семен", "Кузнецов", 3, 123_000)));
 
+    // /////////// Внутренний метод проверки правильности ввода \\\\\\\\\\\\\\\\\\
+    private String checkRightWriting(String name) {
+     // --- проверяем на наличие только букв алфавита --------------
+        boolean isAlpha = StringUtils.isAlpha(name);
+    // =====   если в имени есть символы, кроме букв, вызываем ошибку 400 Bad Request =======
+        if (!isAlpha) {
+            throw new AlreadyExistsException();
+        }
+ // (1) ====== переводим принудительно все символы в нижний регистр =======
+        String mixedName = StringUtils.lowerCase(name);
+ // (2) ====== делаем первую букву в Заглавном регистре =======
+        mixedName = StringUtils.capitalize(mixedName);
+ // (3) ====== возвращаем имя обратно в метод  =======
+        return mixedName;
+    }
+
+
     // +++++++++++++++++++++++ Добавляем нового сотрудника +++++++++++++++++++++++++++
     @Override
     public Employee addNewEmployee(String firstName, String lastName, int department, int salary) throws AlreadyExistsException {
-        Employee employee = new Employee(firstName, lastName, department, salary);
-        String fullname = firstName + " " + lastName;
+        String mixedFirstName = checkRightWriting(firstName);
+        String mixedLastName = checkRightWriting(lastName);
+        String fullName = mixedFirstName + " " + mixedLastName;
         // =====   если работник уже есть в базе, вызываем ошибку 400 Bad Request =======
-        if (empl.containsKey(fullname)) {
+        if (empl.containsKey(fullName)) {
             throw new AlreadyExistsException();
         }
-        empl.put(fullname, employee);
+        Employee employee = new Employee(mixedFirstName, mixedLastName, department, salary);
+        empl.put(fullName, employee);
         return employee;
     }
 
     // ----------------- Находим сотрудника по Ф.И.О. ------------------------------------
     @Override
     public Employee findEmployee(String firstName, String lastName) {
-        String fullname = firstName + " " + lastName;
+        String mixedFirstName = checkRightWriting(firstName);
+        String mixedLastName = checkRightWriting(lastName);
+        String fullName = mixedFirstName + " " + mixedLastName;
         // =====   если сотрудник не найден, вызываем ошибку 404 Not Found =======
-        if (!empl.containsKey(fullname)) {
+        if (!empl.containsKey(fullName)) {
             throw new EmployeeNotFoundException();
         }
-        return empl.get(fullname);
+        return empl.get(fullName);
     }
 
     // ----------------- Удаляем сотрудника по Ф.И.О. ------------------------------------
@@ -51,9 +73,11 @@ public class EmployeeService implements EmployeeInterface {
         if (empl.isEmpty()) {
             throw new EmptyBaseException();
         }
-        Employee employee = findEmployee(firstName, lastName);
-        String fullname = firstName + " " + lastName;
-        empl.remove(fullname);
+        String mixedFirstName = checkRightWriting(firstName);
+        String mixedLastName = checkRightWriting(lastName);
+        String fullName = mixedFirstName + " " + mixedLastName;
+        Employee employee = findEmployee(mixedFirstName, mixedLastName);
+        empl.remove(fullName);
         return employee;
     }
 
