@@ -6,6 +6,7 @@ import pro.sky.map_employee_hw8.data.Employee;
 import pro.sky.map_employee_hw8.exceptions.AlreadyExistsException;
 import pro.sky.map_employee_hw8.exceptions.EmployeeNotFoundException;
 import pro.sky.map_employee_hw8.exceptions.EmptyBaseException;
+import pro.sky.map_employee_hw8.exceptions.InvalidInputException;
 import pro.sky.map_employee_hw8.interfaces.EmployeeInterface;
 
 import java.util.*;
@@ -23,33 +24,31 @@ public class EmployeeService implements EmployeeInterface {
             "Семен Кузнецов", new Employee("Семен", "Кузнецов", 3, 123_000)));
 
     // /////////// Внутренний метод проверки правильности ввода \\\\\\\\\\\\\\\\\\
-    private String checkRightWriting(String name) {
-     // --- проверяем на наличие только букв алфавита --------------
+    private void checkRightWriting(String name) {
+        // --- проверяем на наличие только букв алфавита --------------
         boolean isAlpha = StringUtils.isAlpha(name);
-    // =====   если в имени есть символы, кроме букв, вызываем ошибку 400 Bad Request =======
+        // =====   если в имени есть символы, кроме букв, вызываем ошибку 400 Bad Request =======
         if (!isAlpha) {
-            throw new AlreadyExistsException();
+            throw new InvalidInputException();
         }
- // (1) ====== переводим принудительно все символы в нижний регистр =======
-        String mixedName = StringUtils.lowerCase(name);
- // (2) ====== делаем первую букву в Заглавном регистре =======
-        mixedName = StringUtils.capitalize(mixedName);
- // (3) ====== возвращаем имя обратно в метод  =======
-        return mixedName;
+        // (1) ====== принудительный перевод всех символов в нижний регистр =======
+        // (2) ====== и перевод первой буквы в Заглавный регистр =======
+        // ===== осуществляется непосредственно в конструкторе объекта Employee
+        // ========        ШИКАРНО !!! === (спасибо Кириллу Качалову :)) =======
     }
 
 
     // +++++++++++++++++++++++ Добавляем нового сотрудника +++++++++++++++++++++++++++
     @Override
     public Employee addNewEmployee(String firstName, String lastName, int department, int salary) throws AlreadyExistsException {
-        String mixedFirstName = checkRightWriting(firstName);
-        String mixedLastName = checkRightWriting(lastName);
-        String fullName = mixedFirstName + " " + mixedLastName;
+        checkRightWriting(firstName);
+        checkRightWriting(lastName);
+        String fullName = firstName + " " + lastName;
         // =====   если работник уже есть в базе, вызываем ошибку 400 Bad Request =======
         if (empl.containsKey(fullName)) {
             throw new AlreadyExistsException();
         }
-        Employee employee = new Employee(mixedFirstName, mixedLastName, department, salary);
+        Employee employee = new Employee(firstName, lastName, department, salary);
         empl.put(fullName, employee);
         return employee;
     }
@@ -57,9 +56,9 @@ public class EmployeeService implements EmployeeInterface {
     // ----------------- Находим сотрудника по Ф.И.О. ------------------------------------
     @Override
     public Employee findEmployee(String firstName, String lastName) {
-        String mixedFirstName = checkRightWriting(firstName);
-        String mixedLastName = checkRightWriting(lastName);
-        String fullName = mixedFirstName + " " + mixedLastName;
+        checkRightWriting(firstName);
+        checkRightWriting(lastName);
+        String fullName = firstName + " " + lastName;
         // =====   если сотрудник не найден, вызываем ошибку 404 Not Found =======
         if (!empl.containsKey(fullName)) {
             throw new EmployeeNotFoundException();
@@ -73,10 +72,8 @@ public class EmployeeService implements EmployeeInterface {
         if (empl.isEmpty()) {
             throw new EmptyBaseException();
         }
-        String mixedFirstName = checkRightWriting(firstName);
-        String mixedLastName = checkRightWriting(lastName);
-        String fullName = mixedFirstName + " " + mixedLastName;
-        Employee employee = findEmployee(mixedFirstName, mixedLastName);
+        Employee employee = findEmployee(firstName, lastName);
+        String fullName = firstName + " " + lastName;
         empl.remove(fullName);
         return employee;
     }

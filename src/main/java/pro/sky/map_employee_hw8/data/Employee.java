@@ -1,18 +1,21 @@
 package pro.sky.map_employee_hw8.data;
 
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Locale;
 import java.util.Objects;
 
 // +++++++++++++++++++++++  класс -  работник  +++++++++++++++++++++++
 public class Employee {
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
     private int department;
     private int salary;
 
     public Employee(String firstName, String lastName, int department, int salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = StringUtils.capitalize(StringUtils.lowerCase(firstName));
+        this.lastName = StringUtils.capitalize(StringUtils.lowerCase(lastName));
         this.department = department;
         this.salary = salary;
     }
