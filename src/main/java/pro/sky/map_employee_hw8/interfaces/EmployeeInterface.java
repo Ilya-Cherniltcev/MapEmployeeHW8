@@ -12,7 +12,7 @@ public interface EmployeeInterface {
 
     Employee deleteEmployee(String firstName, String lastName);
 
-    String calcCostsPerMonth();
+    int calcCostsPerMonth();
 
     Employee getEmployeeOfMaxSalary(int departmentId);
 
@@ -22,5 +22,5 @@ public interface EmployeeInterface {
 
     List<Employee> getEmployeesOfDepartment(int departmentId);
 
-    Map<Integer, List<Employee>> getAllEmployees();
+    List<Employee> getAllEmployees();
 }

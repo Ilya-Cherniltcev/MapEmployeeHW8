@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.map_employee_hw8.data.Employee;
 import pro.sky.map_employee_hw8.interfaces.EmployeeInterface;
+import pro.sky.map_employee_hw8.services.DepartmentService;
 
 import java.util.Collection;
 import java.util.List;
@@ -73,7 +74,7 @@ public class EmployeeController {
 
     // + + + + + + + +      ВСЕ СОТРУДНИКИ ПО ОТДЕЛАМ   + + + + + + + +
     @GetMapping(path = "/all")
-    public Map<Integer, List<Employee>>  getAllEmployees() {
+    public List<Employee>  getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 }

@@ -50,8 +50,8 @@ public class Employee {
 //***
     @Override
     public String toString() {
-        return firstName + " " + lastName + ", отдел " + department +
-                ", з/п " + salary + " руб./мес";
+        return firstName + " " + lastName + ", " + department +
+                ", " + salary;
     }
 
     @Override
