@@ -15,31 +15,29 @@ import java.util.stream.Collectors;
 public class EmployeeService implements EmployeeInterface {
     // ==== сервис по работе с общими методами ===========================================
     private final CheckRightWritingOfName check = new CheckRightWritingOfName();
-    private final DepartmentService departmentService;
     private final Map<String, Employee> empl = new HashMap<>();
 
-    public EmployeeService(DepartmentService departmentService) {
-        this.departmentService = departmentService;
-    }
+    // public EmployeeService(DepartmentService departmentService) {
+//        this.departmentService = departmentService;
+//    }
 
 // ****************  Основные (общие) методы по работе с сотрудниками ****************
     // *********************************************************************************
 
     // ----- получаем всех сотрудников, отсортированных по отделам -----
     @Override
-    public List<Employee> getAllEmployees() {
-//    public Map<Integer, List<Employee>> getAllEmployees() {
-         List<Employee> employeeMap = empl
+   public List<Employee> getAllEmployees() {
+        //   public Map<Integer, List<Employee>> getAllEmployees() {
+        List <Employee> employeeList = empl
 //                .values()
 //                .stream()
 //                .collect(Collectors.groupingBy(Employee::getDepartment));
 //        return employeeMap;
-
                 .values()
                 .stream()
                 .sorted(Comparator.comparing(Employee::getDepartment))
                 .collect(Collectors.toList());
-        return employeeMap;
+        return employeeList;
     }
 
     // ----- Добавляем нового сотрудника -----
@@ -104,32 +102,6 @@ public class EmployeeService implements EmployeeInterface {
         return (int) asDouble;
     }
 
-    // ****************  Методы по работе с сотрудниками ПО ОТДЕЛУ ****************
-    // *********************************************************************************
-
-    // -----  получаем список всех сотрудников конкретного отдела -----
-    @Override
-    public List<Employee> getEmployeesOfDepartment(int departmentId) {
-        List<Employee> employeesOfDep = departmentService.
-                allDepartmentsEmployees(departmentId,empl);
-        return employeesOfDep;
-    }
-
-    // ----- определяем сотрудника с МАКСимальной з/п -----
-    @Override
-    public Employee getEmployeeOfMaxSalary(int departmentId) {
-        Employee employeeWithMaxSalary = departmentService.
-                whoHasMaxSalary(departmentId, empl);
-        return employeeWithMaxSalary;
-    }
-
-    // ----- определяем сотрудника с минимальной з/п -----
-    @Override
-    public Employee getEmployeeOfMinSalary(int departmentId) {
-        Employee employeeWithMinSalary = departmentService.
-                whoHasMinSalary(departmentId, empl);
-        return employeeWithMinSalary;
-    }
 
 }
 

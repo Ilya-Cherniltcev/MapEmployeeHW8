@@ -8,17 +8,16 @@ import pro.sky.map_employee_hw8.data.Employee;
 import pro.sky.map_employee_hw8.interfaces.EmployeeInterface;
 import pro.sky.map_employee_hw8.services.DepartmentService;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
     private final EmployeeInterface employeeService;
-
-    public EmployeeController(EmployeeInterface employeeService) {
+    private final DepartmentService departmentService;
+    public EmployeeController(EmployeeInterface employeeService, DepartmentService departmentService) {
         this.employeeService = employeeService;
+        this.departmentService = departmentService;
     }
 
     // ++++++++  добавить сотрудника
@@ -50,13 +49,13 @@ public class EmployeeController {
     // * * * * * * *  сотрудник с МАКСимальной з/п * * * * * * * *
     @GetMapping(path = "/max-salary")
     public Employee getEmployeeOfMaxSalary(@RequestParam("departmentId") int departmentId) {
-        return employeeService.getEmployeeOfMaxSalary(departmentId);
+        return departmentService.whoHasMaxSalary(departmentId);
     }
 
     // * * * * * * *  сотрудник с минимальной з/п * * * * * * * *
     @GetMapping(path = "/min-salary")
     public Employee getEmployeeOfMinSalary(@RequestParam("departmentId") int departmentId) {
-        return employeeService.getEmployeeOfMinSalary(departmentId);
+        return departmentService.whoHasMinSalary(departmentId);
     }
 
     // * * * * * * *  средняя  з/п * * * * * * * *
@@ -69,7 +68,7 @@ public class EmployeeController {
     // * * * * * * *  все сотрудники отдела* * * * * * * *
     @GetMapping(path = "/all", params = {"departmentId"})
     public List<Employee> getEmployeesOfDepartment(@RequestParam("departmentId") int departmentId) {
-        return employeeService.getEmployeesOfDepartment(departmentId);
+        return departmentService.allDepartmentsEmployees(departmentId);
     }
 
     // + + + + + + + +      ВСЕ СОТРУДНИКИ ПО ОТДЕЛАМ   + + + + + + + +

@@ -14,13 +14,13 @@ public interface EmployeeInterface {
 
     int calcCostsPerMonth();
 
-    Employee getEmployeeOfMaxSalary(int departmentId);
-
-    Employee getEmployeeOfMinSalary(int departmentId);
+//    Employee getEmployeeOfMaxSalary(int departmentId);
+//
+//    Employee getEmployeeOfMinSalary(int departmentId);
 
     int calcMiddleSalary();
 
-    List<Employee> getEmployeesOfDepartment(int departmentId);
+   // List<Employee> getEmployeesOfDepartment(int departmentId);
 
     List<Employee> getAllEmployees();
 }
