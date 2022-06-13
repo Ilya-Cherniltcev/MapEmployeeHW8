@@ -22,5 +22,5 @@ public interface EmployeeInterface {
 
    // List<Employee> getEmployeesOfDepartment(int departmentId);
 
-    List<Employee> getAllEmployees();
+    Map <String, Employee> getAllEmployees();
 }

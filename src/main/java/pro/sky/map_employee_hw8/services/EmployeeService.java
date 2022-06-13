@@ -8,11 +8,13 @@ import pro.sky.map_employee_hw8.exceptions.EmptyBaseException;
 import pro.sky.map_employee_hw8.interfaces.EmployeeInterface;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
 @Service
 public class EmployeeService implements EmployeeInterface {
+    EmployeeService employeeService;
     // ==== сервис по работе с общими методами ===========================================
     private final CheckRightWritingOfName check = new CheckRightWritingOfName();
     private final Map<String, Employee> empl = new HashMap<>();
@@ -26,18 +28,24 @@ public class EmployeeService implements EmployeeInterface {
 
     // ----- получаем всех сотрудников, отсортированных по отделам -----
     @Override
-   public List<Employee> getAllEmployees() {
+   public Map <String, Employee> getAllEmployees() {
         //   public Map<Integer, List<Employee>> getAllEmployees() {
-        List <Employee> employeeList = empl
-//                .values()
-//                .stream()
-//                .collect(Collectors.groupingBy(Employee::getDepartment));
-//        return employeeMap;
+        Map <String, Employee> employeeMap = empl
                 .values()
                 .stream()
                 .sorted(Comparator.comparing(Employee::getDepartment))
-                .collect(Collectors.toList());
-        return employeeList;
+                .collect(Collectors.toMap(emp -> empl.values()., Function::identity));
+                //.collect(Collectors.groupingBy(Employee::getDepartment));
+        return employeeMap;
+//                .values()
+//                .stream()
+//                .sorted(Comparator.comparing(Employee::getDepartment))
+//                .collect(Collectors.toList());
+//        return employeeList;
+    }
+
+    private String getKey() {
+        return empl.get();
     }
 
     // ----- Добавляем нового сотрудника -----

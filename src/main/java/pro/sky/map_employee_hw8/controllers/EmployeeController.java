@@ -9,6 +9,7 @@ import pro.sky.map_employee_hw8.interfaces.EmployeeInterface;
 import pro.sky.map_employee_hw8.services.DepartmentService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/employee")
@@ -73,7 +74,7 @@ public class EmployeeController {
 
     // + + + + + + + +      ВСЕ СОТРУДНИКИ ПО ОТДЕЛАМ   + + + + + + + +
     @GetMapping(path = "/all")
-    public List<Employee>  getAllEmployees() {
+    public Map<String, Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 }

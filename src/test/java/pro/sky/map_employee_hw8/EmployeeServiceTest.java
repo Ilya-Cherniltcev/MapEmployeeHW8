@@ -3,10 +3,12 @@ package pro.sky.map_employee_hw8;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.commons.annotation.Testable;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import pro.sky.map_employee_hw8.data.Employee;
 import pro.sky.map_employee_hw8.exceptions.InvalidInputException;
@@ -14,18 +16,25 @@ import pro.sky.map_employee_hw8.services.DepartmentService;
 import pro.sky.map_employee_hw8.services.EmployeeService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static pro.sky.map_employee_hw8.MapEmployeeTestConstants.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
-    private DepartmentService departmentService;
+   private DepartmentService dep;
+   private List<Employee> employeesList = new ArrayList(List.of (
+            "Евгений", "Потапов", 1, 80_000,
+            "Алла", "Горева", 1, 53_050,
+            "Олег", "Крылов", 2, 74_000,
+            "Илья", "Круглов", 2, 105_300,
+            "Антон", "Тулупов", 3, 63_700,
+            "Семен", "Кузнецов", 3, 123_000));
 
-    @Mock
+    @MockBean
     private EmployeeService employeeService;
+    @InjectMocks
+    private DepartmentService departmentService;
 
     // ===== заполняем мапу перед всеми тестами =====
     @BeforeEach
@@ -37,17 +46,14 @@ public class EmployeeServiceTest {
         employeeService.addNewEmployee("Илья", "Круглов", 2, 105300);
         employeeService.addNewEmployee("Антон", "Тулупов", 3, 63700);
         employeeService.addNewEmployee("Семен", "Кузнецов", 3, 123000);
-
     }
 
     @Test
     public void shouldReturnAllEmployees() {
-  //      List<Employee> resultList = new ArrayList(employeeService.getAllEmployees());
-//        List<Employee> result = new ArrayList(List.of(resultMap.values()));
- //       System.out.println(resultList);
-//        System.out.println(result);
- //        Assertions.assertEquals(resultList, EMPLOYEE_LIST);
-       //Assertions.assertTrue(resultList.contains(EMPLOYEE_LIST));
+   //     List<Employee> resultList = new ArrayList(employeeService.getAllEmployees());
+       // List<Employee> result = new ArrayList(List.of(resultMap.values()));
+   //    Assertions.assertEquals(resultList, EMPLOYEE_LIST);
+    //   Assertions.assertTrue(resultList.contains(EMPLOYEE_LIST));
     }
 
     // ===== возвращает Employee, при успешном его добавлении в мапу =====
@@ -129,7 +135,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void getEmployeeWithMaxSalary() {
-        Assertions.assertNotNull(employeeService);
+   //     Assertions.assertNotNull(employeeService);
         Employee result = departmentService.whoHasMaxSalary(1);
         //   Mockito.when(employeeService.getEmployeeOfMaxSalary(3).getSalary()).thenReturn(50000);
 
