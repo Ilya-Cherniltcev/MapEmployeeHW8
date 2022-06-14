@@ -17,10 +17,16 @@ public class EmployeeService implements EmployeeInterface {
     EmployeeService employeeService;
     // ==== сервис по работе с общими методами ===========================================
     private final CheckRightWritingOfName check = new CheckRightWritingOfName();
-    private final Map<String, Employee> empl = new HashMap<>();
+    private final Map<String, Employee> empl;
 
-    // public EmployeeService(DepartmentService departmentService) {
-//        this.departmentService = departmentService;
+    public EmployeeService(Map<String, Employee> empl) {
+        this.empl = empl;
+    }
+
+
+    // ******  метод получения (склеивания полного ФИО) имени и фамилии из Employee
+//    private String getFullName (Employee e) {
+//        return e.getFirstName() + " " + e.getLastName();
 //    }
 
 // ****************  Основные (общие) методы по работе с сотрудниками ****************
@@ -30,23 +36,21 @@ public class EmployeeService implements EmployeeInterface {
     @Override
    public Map <String, Employee> getAllEmployees() {
         //   public Map<Integer, List<Employee>> getAllEmployees() {
-        Map <String, Employee> employeeMap = empl
-                .values()
-                .stream()
-                .sorted(Comparator.comparing(Employee::getDepartment))
-                .collect(Collectors.toMap(emp -> empl.values()., Function::identity));
-                //.collect(Collectors.groupingBy(Employee::getDepartment));
-        return employeeMap;
+//        Map <String, Employee> employeeMap = empl
+//                .values()
+//                .stream()
+//                .sorted(Comparator.comparing(Employee::getDepartment))
+//                .collect(Collectors.toMap(emp -> emp.getFullName(), Function::identity));
+//                //.collect(Collectors.groupingBy(Employee::getDepartment));
+//        return employeeMap;
 //                .values()
 //                .stream()
 //                .sorted(Comparator.comparing(Employee::getDepartment))
 //                .collect(Collectors.toList());
 //        return employeeList;
+        return empl;
     }
 
-    private String getKey() {
-        return empl.get();
-    }
 
     // ----- Добавляем нового сотрудника -----
     @Override

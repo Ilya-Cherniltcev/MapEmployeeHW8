@@ -19,22 +19,23 @@ public class DepartmentService  {
     }
 
     // =======   получить всех сотрудников отдела ===================
-//    public Map <String, Employee> allDepartmentsEmployees(int departmentId) {
-//   //     List<Employee> empl = employeeService.getAllEmployees();
-//        return empl.stream()
-//                .filter(s -> s.getDepartment() == departmentId)
-//                .collect(Collectors.toList());
-//    }
+    public List <Employee> allDepartmentsEmployees(int departmentId) {
+        Map <String, Employee> empl = employeeService.getAllEmployees();
+        return empl.values()
+                .stream()
+                .filter(s -> s.getDepartment() == departmentId)
+                .collect(Collectors.toList());
+    }
 
     // определяем сотрудника с МАКСимальной з/п ===================
-//    public Employee whoHasMaxSalary(int departmentId) {
-//        Map <String, Employee> empl = employeeService.getAllEmployees();
-//        return empl
-//                .stream()
-//                .filter(s -> s.getDepartment() == departmentId)
-//                .max(Comparator.comparingInt(Employee::getSalary))
-//                .orElseThrow(() -> new EmployeeNotFoundException());
-//    }
+    public Employee whoHasMaxSalary(int departmentId) {
+        Map <String, Employee> empl = employeeService.getAllEmployees();
+        return empl.values()
+                .stream()
+                .filter(s -> s.getDepartment() == departmentId)
+                .max(Comparator.comparingInt(Employee::getSalary))
+                .orElseThrow(() -> new EmployeeNotFoundException());
+    }
 
     // определяем сотрудника с минимальной з/п ===================
 //    public Employee whoHasMinSalary(int departmentId) {

@@ -47,17 +47,17 @@ public class EmployeeController {
                 + employeeService.calcCostsPerMonth() + " руб.";
     }
 
-    // * * * * * * *  сотрудник с МАКСимальной з/п * * * * * * * *
+//    // * * * * * * *  сотрудник с МАКСимальной з/п * * * * * * * *
     @GetMapping(path = "/max-salary")
     public Employee getEmployeeOfMaxSalary(@RequestParam("departmentId") int departmentId) {
         return departmentService.whoHasMaxSalary(departmentId);
     }
 
-    // * * * * * * *  сотрудник с минимальной з/п * * * * * * * *
-    @GetMapping(path = "/min-salary")
-    public Employee getEmployeeOfMinSalary(@RequestParam("departmentId") int departmentId) {
-        return departmentService.whoHasMinSalary(departmentId);
-    }
+//    // * * * * * * *  сотрудник с минимальной з/п * * * * * * * *
+//    @GetMapping(path = "/min-salary")
+//    public Employee getEmployeeOfMinSalary(@RequestParam("departmentId") int departmentId) {
+//        return departmentService.whoHasMinSalary(departmentId);
+//    }
 
     // * * * * * * *  средняя  з/п * * * * * * * *
     @GetMapping(path = "/middlesalary")

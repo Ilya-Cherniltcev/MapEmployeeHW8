@@ -16,7 +16,9 @@ import pro.sky.map_employee_hw8.services.DepartmentService;
 import pro.sky.map_employee_hw8.services.EmployeeService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static pro.sky.map_employee_hw8.MapEmployeeTestConstants.*;
 
@@ -39,21 +41,21 @@ public class EmployeeServiceTest {
     // ===== заполняем мапу перед всеми тестами =====
     @BeforeEach
     public void setup() {
-        employeeService = new EmployeeService();
-        employeeService.addNewEmployee("Евгений", "Потапов", 1, 80000);
-        employeeService.addNewEmployee("Алла", "Горева", 1, 53050);
-        employeeService.addNewEmployee("Олег", "Крылов", 2, 74000);
-        employeeService.addNewEmployee("Илья", "Круглов", 2, 105300);
-        employeeService.addNewEmployee("Антон", "Тулупов", 3, 63700);
-        employeeService.addNewEmployee("Семен", "Кузнецов", 3, 123000);
+        Map<String, Employee> empl = new HashMap(Map.of (
+                "Евгений Потапов", new Employee("Евгений", "Потапов", 1, 80000),
+                "Алла Горева", new Employee("Алла", "Горева", 1, 53050),
+                "Олег Крылов", new Employee("Олег", "Крылов", 2, 74000),
+                "Илья Круглов", new Employee("Илья", "Круглов", 2, 105300),
+                "Антон Тулупов", new Employee("Антон", "Тулупов", 3, 63700),
+                "Семен Кузнецов", new Employee("Семен", "Кузнецов", 3, 123000)));
+        employeeService = new EmployeeService(empl);
+        departmentService = new DepartmentService(employeeService);
     }
 
     @Test
     public void shouldReturnAllEmployees() {
-   //     List<Employee> resultList = new ArrayList(employeeService.getAllEmployees());
-       // List<Employee> result = new ArrayList(List.of(resultMap.values()));
-   //    Assertions.assertEquals(resultList, EMPLOYEE_LIST);
-    //   Assertions.assertTrue(resultList.contains(EMPLOYEE_LIST));
+        Map<String, Employee> result = employeeService.getAllEmployees();
+       Assertions.assertEquals(result, EMPLOYEE_MAP);
     }
 
     // ===== возвращает Employee, при успешном его добавлении в мапу =====
@@ -135,14 +137,11 @@ public class EmployeeServiceTest {
 
     @Test
     public void getEmployeeWithMaxSalary() {
-   //     Assertions.assertNotNull(employeeService);
-        Employee result = departmentService.whoHasMaxSalary(1);
-        //   Mockito.when(employeeService.getEmployeeOfMaxSalary(3).getSalary()).thenReturn(50000);
-
-//        int maxSalary = employeeService.getEmployeeOfMaxSalary(3).getSalary();
-//        System.out.println(maxSalary);
-        //  int maxSalary = 50000;
-    //    Assertions.assertEquals(maxSalary, 50000);
+        Mockito.when(departmentService.whoHasMaxSalary(1))
+                .thenReturn(NEW_EMPLOYEE);
+        Employee mockMaxSalary = departmentService.whoHasMaxSalary(1);
+        System.out.println(mockMaxSalary);
+        Assertions.assertEquals(mockMaxSalary, NEW_EMPLOYEE);
 
 
     }
