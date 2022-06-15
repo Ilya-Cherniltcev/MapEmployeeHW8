@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class DepartmentService  {
+public class DepartmentService {
     // === сервис по работе с методами по отделам ====
     EmployeeService employeeService;
 
@@ -18,9 +18,9 @@ public class DepartmentService  {
         this.employeeService = employeeService;
     }
 
-    // =======   получить всех сотрудников отдела ===================
-    public List <Employee> allDepartmentsEmployees(int departmentId) {
-        Map <String, Employee> empl = employeeService.getAllEmployees();
+    // =======   получить всех сотрудников конкретного отдела ===================
+    public List<Employee> allDepartmentsEmployees(int departmentId) {
+        Map<String, Employee> empl = employeeService.getAllEmployees();
         return empl.values()
                 .stream()
                 .filter(s -> s.getDepartment() == departmentId)
@@ -29,7 +29,7 @@ public class DepartmentService  {
 
     // определяем сотрудника с МАКСимальной з/п ===================
     public Employee whoHasMaxSalary(int departmentId) {
-        Map <String, Employee> empl = employeeService.getAllEmployees();
+        Map<String, Employee> empl = employeeService.getAllEmployees();
         return empl.values()
                 .stream()
                 .filter(s -> s.getDepartment() == departmentId)
@@ -38,14 +38,12 @@ public class DepartmentService  {
     }
 
     // определяем сотрудника с минимальной з/п ===================
-//    public Employee whoHasMinSalary(int departmentId) {
-//        Map <String, Employee> empl = employeeService.getAllEmployees();
-//        return empl
-//                .stream()
-//                .filter(s -> s.getDepartment() == departmentId)
-//                .min(Comparator.comparingInt(Employee::getSalary))
-//                .orElseThrow(() -> new EmployeeNotFoundException());
-//    }
-
-
+    public Employee whoHasMinSalary(int departmentId) {
+        Map<String, Employee> empl = employeeService.getAllEmployees();
+        return empl.values()
+                .stream()
+                .filter(s -> s.getDepartment() == departmentId)
+                .min(Comparator.comparingInt(Employee::getSalary))
+                .orElseThrow(() -> new EmployeeNotFoundException());
+    }
 }

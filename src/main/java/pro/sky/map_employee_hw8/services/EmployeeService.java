@@ -1,26 +1,26 @@
 package pro.sky.map_employee_hw8.services;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.map_employee_hw8.data.Employee;
 import pro.sky.map_employee_hw8.exceptions.AlreadyExistsException;
 import pro.sky.map_employee_hw8.exceptions.EmployeeNotFoundException;
 import pro.sky.map_employee_hw8.exceptions.EmptyBaseException;
+import pro.sky.map_employee_hw8.exceptions.InvalidInputException;
 import pro.sky.map_employee_hw8.interfaces.EmployeeInterface;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 
 @Service
 public class EmployeeService implements EmployeeInterface {
     EmployeeService employeeService;
     // ==== сервис по работе с общими методами ===========================================
-    private final CheckRightWritingOfName check = new CheckRightWritingOfName();
-    private final Map<String, Employee> empl;
+    //  private CheckRightWritingOfName check = new CheckRightWritingOfName();
+    private Map<String, Employee> empl = new HashMap<>();
 
-    public EmployeeService(Map<String, Employee> empl) {
-        this.empl = empl;
+    public EmployeeService() {
+        this.employeeService = employeeService;
     }
 
 
@@ -29,12 +29,21 @@ public class EmployeeService implements EmployeeInterface {
 //        return e.getFirstName() + " " + e.getLastName();
 //    }
 
+    private void isRightWriting(String name) {
+        // --- проверяем на наличие только букв алфавита --------------
+        boolean isAlpha = StringUtils.isAlpha(name);
+        // =====   если в имени есть символы, кроме букв, вызываем ошибку 400 Bad Request =======
+        if (!isAlpha) {
+            throw new InvalidInputException();
+        }
+    }
+
 // ****************  Основные (общие) методы по работе с сотрудниками ****************
     // *********************************************************************************
 
     // ----- получаем всех сотрудников, отсортированных по отделам -----
     @Override
-   public Map <String, Employee> getAllEmployees() {
+    public Map<String, Employee> getAllEmployees() {
         //   public Map<Integer, List<Employee>> getAllEmployees() {
 //        Map <String, Employee> employeeMap = empl
 //                .values()
@@ -56,11 +65,11 @@ public class EmployeeService implements EmployeeInterface {
     @Override
     public Employee addNewEmployee(String firstName, String lastName, int department, int salary) throws AlreadyExistsException {
         // ******* проверяем корректность имени и фамилии *******
-        check.isRightWriting(firstName);
-        check.isRightWriting(lastName);
+        isRightWriting(firstName);
+        isRightWriting(lastName);
         String fullName = firstName + " " + lastName;
         // *******   если работник уже есть в базе, вызываем ошибку 400 Bad Request *******
-        if (empl.containsKey(fullName)) {
+        if (empl != null && empl.containsKey(fullName)) {
             throw new AlreadyExistsException();
         }
         Employee employee = new Employee(firstName, lastName, department, salary);
@@ -72,11 +81,11 @@ public class EmployeeService implements EmployeeInterface {
     @Override
     public Employee findEmployee(String firstName, String lastName) {
         // ******* проверяем корректность имени и фамилии *******
-        check.isRightWriting(firstName);
-        check.isRightWriting(lastName);
+        isRightWriting(firstName);
+        isRightWriting(lastName);
         String fullName = firstName + " " + lastName;
         // *******  если сотрудник не найден, вызываем ошибку 404 Not Found *******
-        if (!empl.containsKey(fullName)) {
+        if (empl != null && !empl.containsKey(fullName)) {
             throw new EmployeeNotFoundException();
         }
         return empl.get(fullName);
@@ -85,7 +94,7 @@ public class EmployeeService implements EmployeeInterface {
     // ----- Удаляем сотрудника по Ф.И.О. -----
     @Override
     public Employee deleteEmployee(String firstName, String lastName) {
-        if (empl.isEmpty()) {
+        if (empl == null) {
             throw new EmptyBaseException();
         }
         Employee employee = findEmployee(firstName, lastName);
@@ -113,7 +122,5 @@ public class EmployeeService implements EmployeeInterface {
                 .average().getAsDouble();
         return (int) asDouble;
     }
-
-
 }
 

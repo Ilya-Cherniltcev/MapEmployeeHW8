@@ -14,13 +14,7 @@ public interface EmployeeInterface {
 
     int calcCostsPerMonth();
 
-//    Employee getEmployeeOfMaxSalary(int departmentId);
-//
-//    Employee getEmployeeOfMinSalary(int departmentId);
-
     int calcMiddleSalary();
 
-   // List<Employee> getEmployeesOfDepartment(int departmentId);
-
-    Map <String, Employee> getAllEmployees();
+    Map<String, Employee> getAllEmployees();
 }
