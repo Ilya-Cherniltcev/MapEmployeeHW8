@@ -14,14 +14,14 @@ import java.util.*;
 
 @Service
 public class EmployeeService implements EmployeeInterface {
-    EmployeeService employeeService;
+ //   EmployeeService employeeService;
     // ==== сервис по работе с общими методами ===========================================
     //  private CheckRightWritingOfName check = new CheckRightWritingOfName();
     private Map<String, Employee> empl = new HashMap<>();
 
-    public EmployeeService() {
-        this.employeeService = employeeService;
-    }
+ //   public EmployeeService() {
+//        this.employeeService = employeeService;
+//    }
 
 
     // ******  метод получения (склеивания полного ФИО) имени и фамилии из Employee

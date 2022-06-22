@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class DepartmentService {
     // === сервис по работе с методами по отделам ====
-    EmployeeService employeeService;
+    final EmployeeService employeeService;
 
     public DepartmentService(EmployeeService employeeService) {
         this.employeeService = employeeService;
